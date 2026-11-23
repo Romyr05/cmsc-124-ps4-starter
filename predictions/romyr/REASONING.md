@@ -32,65 +32,65 @@ nothing and the search ends after one answer.
 
 ## P01
 
-Write one to three sentences here. Name the rule that fixes each field.
+Facts are tried top to bottom. parent(tom, liz) comes before parent(tom, bob), and no other fact has tom first.
 
 ## P02
 
-Write one to three sentences here. Name the rule that fixes each field.
+No variables, so a match prints true. Only one fact matches, so there is no second answer.
 
 ## P03
 
-Write one to three sentences here. Name the rule that fixes each field.
+No fact has tom as the child, so nothing matches.
 
 ## P04
 
-Write one to three sentences here. Name the rule that fixes each field.
+X binds to f(Y, a), then Y binds to b. X contains that same Y, so X prints as f(b,a). Unification succeeds only one way.
 
 ## P05
 
-Write one to three sentences here. Name the rule that fixes each field.
+Same functor and arity, so the arguments match one by one: X=a and b=Y. Only one way to match.
 
 ## P06
 
-Write one to three sentences here. Name the rule that fixes each field.
+Two different atoms never unify.
 
 ## P07
 
-Write one to three sentences here. Name the rule that fixes each field.
+parent(tom, P) tries liz first, but liz has no children. Then bob, whose children are ann, then pat.
 
 ## P08
 
-Write one to three sentences here. Name the rule that fixes each field.
+The base clause comes first, so tom's children (liz, bob) come out first. Recursion through bob then adds ann, pat, sue, jim.
 
 ## P09
 
-Write one to three sentences here. Name the rule that fixes each field.
+The recursive clause comes first, so the deepest descendants come out first: sue, jim, then ann, pat, then liz, bob. Same 6 answers.
 
 ## P10
 
-Write one to three sentences here. Name the rule that fixes each field.
+The base clause gives pat. The recursive clause walks the parent facts in order and finds tom (through bob, pat), then bob (through pat).
 
 ## P11
 
-Write one to three sentences here. Name the rule that fixes each field.
+Left recursion: the first clause calls reach again before reading any edge, so it never produces an answer.
 
 ## P12
 
-Write one to three sentences here. Name the rule that fixes each field.
+Reads an edge first, so it reaches d via a, b, c. Backtracking goes around the a-b-c cycle and finds true again, forever.
 
 ## P13
 
-Write one to three sentences here. Name the rule that fixes each field.
+len counts back up from len([], 0): 1, 2, 3. Only one clause fits each list, so there is one answer.
 
 ## P14
 
-Write one to three sentences here. Name the rule that fixes each field.
+With only the result known, join lists every split of [1,2] into front and back: []+[1,2], [1]+[2], [1,2]+[].
 
 ## P15
 
-Write one to three sentences here. Name the rule that fixes each field.
+X > 2 runs first while X is unbound, so arithmetic throws an instantiation error.
 
 ## P16
 
-Write one to three sentences here. Name the rule that fixes each field.
+elem binds X to 1, 2, 3 before the test runs, and only 3 passes X > 2.
 
