@@ -16,20 +16,37 @@
 %
 % Order matters. X \= Y succeeds only when X and Y are already bound to
 % different things, so put it after the goal that binds them.
-sibling(_, _) :-
-    throw(not_implemented(sibling/2)).
+%
+% find X's parent P, then every child Y of the same P, then drop the
+% pair where Y is X itself.
+sibling(X, Y) :-
+    parent(P, X),
+    parent(P, Y),
+    X \= Y.
 
 % cousin(X, Y): a parent of X and a parent of Y are siblings.
-cousin(_, _) :-
-    throw(not_implemented(cousin/2)).
+%
+%go up one generation from each side (PX, PY), then reuse sibling/2.
+% sibling/2 already rules out PX = PY, so siblings are never cousins.
+cousin(X, Y) :-
+    parent(PX, X),
+    parent(PY, Y),
+    sibling(PX, PY).
 
 % descendant(D, A): A is an ancestor of D.
 %
 % Two clauses, the mirror image of ancestor/2 in cases/kb.pl. The base
 % clause reads one parent fact. The recursive clause reads one parent fact
 % and then asks a smaller question.
-descendant(_, _) :-
-    throw(not_implemented(descendant/2)).
+%
+%base clause, D is A's child. Recursive clause, step down from A to
+% a child P, then ask whether D descends from P. The tree has no cycles,
+% so every step goes one generation down and the search ends.
+descendant(D, A) :-
+    parent(A, D).
+descendant(D, A) :-
+    parent(A, P),
+    descendant(D, P).
 
 %%% R2 -- lists.
 
@@ -58,5 +75,18 @@ last_of(_, _) :-
 % the cycle a -> b -> c -> a always offers one more edge. Carry the nodes
 % you visited. Refuse to step onto one again. \+ Goal is true when Goal
 % cannot be proved. That is how you say "not yet visited."
-route(_, _, _) :-
-    throw(not_implemented(route/3)).
+route(From, To, Path) :-
+    route(From, To, [From], Path).
+
+% route(From, To, Visited, Path): Visited holds the nodes already on the
+% path, so the walk never steps onto one twice and the cycle ends.
+%
+% clause 1 stops when the walk stands on To; the path ends [To].
+% Clause 2 puts From at the front of the path, takes one edge to Next,
+% skips Next if it is already visited, then walks on from Next. The path
+% is built front to back, so it never needs rev/2.
+route(To, To, _, [To]).
+route(From, To, Visited, [From|Rest]) :-
+    edge(From, Next),
+    \+ elem(Next, Visited),
+    route(Next, To, [Next|Visited], Rest).
