@@ -30,67 +30,69 @@ pat first, so X binds to jim. No second fact matches, so the first ; finds
 nothing and the search ends after one answer.
 ```
 
+
 ## P01
 
-Write one to three sentences here. Name the rule that fixes each field.
+The `parent` facts are tried from top to bottom. `parent(tom, liz)` gives the first answer and `parent(tom, bob)` gives the second, so there are 2 answers.
 
 ## P02
 
-Write one to three sentences here. Name the rule that fixes each field.
+`parent(tom, bob)` directly matches the second parent fact, so the query succeeds once. There are no more matching facts.
 
 ## P03
 
-Write one to three sentences here. Name the rule that fixes each field.
+No `parent` fact has `tom` as its second argument. The query therefore fails and has no answers.
 
 ## P04
 
-Write one to three sentences here. Name the rule that fixes each field.
+`X = f(Y, a)` makes `X` the term `f(Y,a)`, then `Y = b` binds `Y` to `b`. Therefore `X` becomes `f(b,a)`.
+
+**Correction:** Predicted `X=f(b,a)`. Prolog printed `X=f(b,a),Y=b`. I forgot that Prolog reports every variable in the query, so `Y=b` is part of the answer too.
 
 ## P05
 
-Write one to three sentences here. Name the rule that fixes each field.
+The two `f` terms unify by matching their arguments. This gives `X = a` and `Y = b`, producing one answer.
 
 ## P06
 
-Write one to three sentences here. Name the rule that fixes each field.
+The atoms `a` and `b` are different, so they cannot unify. The query fails.
 
 ## P07
 
-Write one to three sentences here. Name the rule that fixes each field.
+The `grandparent` rule first finds Tom's children. `liz` has no children, so Prolog backtracks to `bob`, whose children are `ann` and `pat`. The answers are therefore `ann` and `pat`.
 
 ## P08
 
-Write one to three sentences here. Name the rule that fixes each field.
+The base `ancestor` clause comes first, giving Tom's direct children `liz` and `bob`. The recursive clause then finds Bob's descendants `ann`, `pat`, `sue`, and `jim`, giving 6 answers in total.
 
 ## P09
 
-Write one to three sentences here. Name the rule that fixes each field.
+The recursive clause comes first, so the deepest descendants come out first: sue, jim, then ann, pat, then liz, bob. Same 6 answers.
 
 ## P10
 
-Write one to three sentences here. Name the rule that fixes each field.
+The base clause gives pat. The recursive clause walks the parent facts in order and finds tom (through bob, pat), then bob (through pat).
 
 ## P11
 
-Write one to three sentences here. Name the rule that fixes each field.
+Left recursion: the first clause calls reach again before reading any edge, so it never produces an answer.
 
 ## P12
 
-Write one to three sentences here. Name the rule that fixes each field.
+Reads an edge first, so it reaches d via a, b, c. Backtracking goes around the a-b-c cycle and finds true again, forever.
 
 ## P13
 
-Write one to three sentences here. Name the rule that fixes each field.
+len counts back up from len([], 0): 1, 2, 3. Only one clause fits each list, so there is one answer.
 
 ## P14
 
-Write one to three sentences here. Name the rule that fixes each field.
+With only the result known, join lists every split of [1,2] into front and back: []+[1,2], [1]+[2], [1,2]+[].
 
 ## P15
 
-Write one to three sentences here. Name the rule that fixes each field.
+X > 2 runs first while X is unbound, so arithmetic throws an instantiation error.
 
 ## P16
 
-Write one to three sentences here. Name the rule that fixes each field.
-
+elem binds X to 1, 2, 3 before the test runs, and only 3 passes X > 2.
