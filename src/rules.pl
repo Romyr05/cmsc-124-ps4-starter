@@ -52,18 +52,42 @@ descendant(D, A) :-
 
 % count_of(X, List, N): X occurs N times in List. N is 0 for the empty
 % list, which is your base case.
-count_of(_, _, _) :-
-    throw(not_implemented(count_of/3)).
+
+% Empty list has zero occurrences.
+count_of(_, [], 0).
+
+% If the head is X, count the tail and add 1.
+count_of(X, [X|T], N) :-
+    count_of(X, T, M),
+    N is M + 1.
+
+% If the head is not X, just count the tail.
+count_of(X, [H|T], N) :-
+    X \= H,
+    count_of(X, T, N).
 
 % rev(List, Reversed): Reversed holds the elements of List in the other
 % order. Reverse the tail. Then use join/3 to put the head at the end.
-rev(_, _) :-
-    throw(not_implemented(rev/2)).
+
+% An empty list reverses to an empty list.
+rev([], []).
+
+
+% Reverse the tail first, then put the head at the end.
+rev([H|T], R) :-
+    rev(T, RT),
+    join(RT, [H], R).
+
 
 % last_of(List, X): X is the last element of List. The empty list has no
 % last element, so last_of([], X) must fail.
-last_of(_, _) :-
-    throw(not_implemented(last_of/2)).
+
+% A one-element list has that element as its last element.
+last_of([X], X).
+
+% Skip the first element and keep checking the rest of the list.
+last_of([_|T], X) :-
+    last_of(T, X).
 
 %%% R3 -- the graph.
 
