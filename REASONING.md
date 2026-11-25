@@ -47,6 +47,8 @@ No `parent` fact has `tom` as its second argument. The query therefore fails and
 
 `X = f(Y, a)` makes `X` the term `f(Y,a)`, then `Y = b` binds `Y` to `b`. Therefore `X` becomes `f(b,a)`.
 
+**Correction:** Predicted `X=f(b,a)`. Prolog printed `X=f(b,a),Y=b`. I forgot that Prolog reports every variable in the query, so `Y=b` is part of the answer too.
+
 ## P05
 
 The two `f` terms unify by matching their arguments. This gives `X = a` and `Y = b`, producing one answer.
